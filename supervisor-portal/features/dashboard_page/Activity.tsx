@@ -1,38 +1,32 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { FileText } from 'lucide-react'
+import { FileText, BookOpen } from 'lucide-react'
+import Link from 'next/link' // Import Link
 import React from 'react'
 
-const activities = [
-    {
-      student: "John Tan Wei Ming",
-      action: "submitted Chapter 1",
-      time: "2 hours ago",
-    },
-    {
-      student: "Sarah Lee Hui Ling",
-      action: "submitted Proposal Draft",
-      time: "5 hours ago",
-    },
-    {
-      student: "Ahmad Bin Hassan",
-      action: "requested meeting",
-      time: "1 day ago",
-    },
-    {
-      student: "Emily Wong Xin Yi",
-      action: "submitted Literature Review",
-      time: "1 day ago",
-    },
-    {
-      student: "David Lim Choon Huat",
-      action: "submitted Methodology",
-      time: "2 days ago",
-    },
-  ];
+interface ActivityItem {
+  id: string;
+  student: string;
+  action: string;
+  timeLabel: string;
+  type: string;
+}
 
+export default function Activity({ activities }: { activities: ActivityItem[] }) {
+  
+  if (activities.length === 0) {
+    return (
+      <Card className="border-gray-100 shadow-sm">
+        <CardHeader className="p-6 border-b border-gray-100">
+           <CardTitle className="text-xl font-bold text-blue-900">Recent Activity</CardTitle>
+        </CardHeader>
+        <CardContent className="p-8 text-center text-gray-500">
+          No recent activity found.
+        </CardContent>
+      </Card>
+    )
+  }
 
-export default function Activity() {
   return (
      <Card className="border-gray-100 shadow-sm">
         <CardHeader className="p-6 border-b border-gray-100">
@@ -42,33 +36,38 @@ export default function Activity() {
         </CardHeader>
         <CardContent className="p-6">
           <div className="space-y-4">
-            {activities.map((activity, index) => (
+            {activities.map((activity) => (
               <div
-                key={index}
+                key={activity.id}
                 className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 {/* Icon Container */}
                 <div className="flex-shrink-0">
-                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                    <FileText className="w-5 h-5 text-blue-600" />
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center
+                    ${activity.type === 'proposal' ? 'bg-purple-100 text-purple-600' : 'bg-blue-100 text-blue-600'}
+                  `}>
+                    {activity.type === 'proposal' ? <BookOpen className="w-5 h-5" /> : <FileText className="w-5 h-5" />}
                   </div>
                 </div>
 
                 {/* Text Content */}
                 <div className="flex-1 min-w-0">
                   <p className="text-gray-800 font-medium">
-                    <span className="text-blue-700">{activity.student}</span>{" "}
+                    <span className="text-blue-700 font-bold">{activity.student}</span>{" "}
                     {activity.action}
                   </p>
-                  <p className="text-sm text-gray-500 mt-1">{activity.time}</p>
+                  <p className="text-sm text-gray-500 mt-1">{activity.timeLabel}</p>
                 </div>
 
                 {/* Action Button */}
                 <Button
                   variant="ghost"
                   className="text-blue-600 hover:bg-blue-50 hover:text-blue-700 whitespace-nowrap"
+                  asChild
                 >
-                  View
+                  <Link href="/proposals">
+                    View
+                  </Link>
                 </Button>
               </div>
             ))}

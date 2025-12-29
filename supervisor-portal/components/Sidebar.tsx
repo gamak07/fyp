@@ -12,6 +12,7 @@ import {
 } from "react-icons/fi";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { logout } from "@/lib/actions/auth";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -75,7 +76,7 @@ export default function Sidebar() {
               </Link>
             );
           })}
-        </div>
+        </div> 
       </nav>
 
       {/* Footer / Logout */}
@@ -83,6 +84,7 @@ export default function Sidebar() {
         <Button 
           variant="ghost"
           className="w-full justify-start text-base font-normal py-6 px-4 text-red-600 hover:bg-red-50 hover:text-red-700"
+          onClick={()=>logout()}
         >
           <FiLogOut className="mr-3 h-5 w-5" />
           Logout

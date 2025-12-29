@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Home, Lightbulb, Upload, Archive, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils"; // Shadcn utility
 import { Button } from "@/components/ui/button";
+import { logout } from "@/lib/actions/auth";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -37,7 +38,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="w-64 bg-white shadow-lg flex-shrink-0 h-screen sticky top-0 border-r">
+    <div className="w-64 bg-white h-screen shadow-lg flex-shrink-0 h-screen sticky top-0 border-r">
       <div className="p-6 border-b">
         <h2 className="text-xl font-bold text-blue-900">FYP Portal</h2>
       </div>
@@ -48,10 +49,13 @@ export default function Sidebar() {
         <NavItem href="/archive" icon={Archive} label="Archive Search" />
       </nav>
       <div className="mt-6 px-4">
-      <Button className="w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors cursor-pointer !text-red-600 bg-transparent hover:!bg-red-50 whitespace-nowrap">
-        <LogOut className="mr-3" />
-        Logout
-      </Button>
+        <Button
+          className="w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors cursor-pointer !text-red-600 bg-transparent hover:!bg-red-50 whitespace-nowrap"
+          onClick={() => logout()}
+        >
+          <LogOut className="mr-3" />
+          Logout
+        </Button>
       </div>
     </div>
   );

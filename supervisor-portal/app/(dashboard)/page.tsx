@@ -1,19 +1,21 @@
 import Breadcrum from "@/features/dashboard_page/Breadcrum";
 import Stats from "@/features/dashboard_page/Stats";
 import Activity from "@/features/dashboard_page/Activity";
+import { getDashboardStats } from "@/lib/actions/dashboard";
 
-export default function Dashboard() {
-  
+export default async function Dashboard() {
+  const { stats, activities } = await getDashboardStats();
+
   return (
     <div className="p-8">
       {/* Welcome Banner */}
       <Breadcrum />
 
       {/* Stats Grid */}
+      <Stats stats={stats} />
 
-      <Stats />
       {/* Recent Activity Card */}
-      <Activity />
+      <Activity activities={activities} />
     </div>
   );
 }

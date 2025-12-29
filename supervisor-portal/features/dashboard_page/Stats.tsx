@@ -1,35 +1,44 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Calendar, Clock, Users } from 'lucide-react';
 
+interface StatsProps {
+  stats: {
+    students: number;
+    pending: number;
+    deadlines: number;
+  }
+}
 
-const stats = [
+export default function Stats({ stats }: StatsProps) {
+  
+  const statItems = [
     { 
       label: "Assigned Students", 
-      value: "8", 
+      value: stats.students, 
       icon: Users, 
       color: "text-blue-600", 
       bg: "bg-blue-100" 
     },
     { 
       label: "Pending Reviews", 
-      value: "5", 
+      value: stats.pending, 
       icon: Clock, 
       color: "text-yellow-600", 
       bg: "bg-yellow-100" 
     },
+    // Keeping Deadlines as 0/placeholder for now
     { 
       label: "Deadlines Approaching", 
-      value: "3", 
+      value: stats.deadlines, 
       icon: Calendar, 
       color: "text-red-600", 
       bg: "bg-red-100" 
     },
   ];
 
-export default function Stats() {
   return (
      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {stats.map((stat, index) => (
+        {statItems.map((stat, index) => (
           <Card key={index} className="border-gray-100 hover:shadow-md transition-shadow">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
